@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f0e8" />
+    <title>Devendra Pohekar — Backend Engineer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+      const loadText = (path) => fetch(path).then((response) => {
+        if (!response.ok) throw new Error(`${path} returned ${response.status}`)
+        return response.text()
+      })
+
+      Promise.all([
+        loadText('/src/main.jsx'),
+        loadText('/src/styles.css'),
+      ]).then(([source, styles]) => {
+        if (!window.React || !window.ReactDOM || !window.Babel) throw new Error('React, ReactDOM, or Babel CDN failed to load')
+        const withoutImports = source.replace("import { useEffect, useState } from 'react'", 'const { useEffect, useState } = React;')
+          .replace("import { createRoot } from 'react-dom/client'", 'const { createRoot } = ReactDOM;')
+          .replace("import './styles.css'", '')
+        const compiled = Babel.transform(withoutImports, { presets: ['react'] }).code
+        const styleTag = document.createElement('style')
+        styleTag.textContent = styles
+        document.head.appendChild(styleTag)
+        new Function('React', 'ReactDOM', compiled)(React, ReactDOM)
+      }).catch((error) => {
+        document.getElementById('root').innerHTML = `<p style="padding: 2rem; font-family: sans-serif;">Portfolio runner error: ${error.message}</p>`
+        console.error(error)
+      })
+    </script>
+  </body>
+</html>

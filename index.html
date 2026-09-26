@@ -19,8 +19,8 @@
       })
 
       Promise.all([
-        loadText('/src/main.jsx'),
-        loadText('/src/styles.css'),
+        loadText('./src/main.jsx'),
+        loadText('./src/styles.css'),
       ]).then(([source, styles]) => {
         if (!window.React || !window.ReactDOM || !window.Babel) throw new Error('React, ReactDOM, or Babel CDN failed to load')
         const withoutImports = source.replace("import { useEffect, useState } from 'react'", 'const { useEffect, useState } = React;')

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
+import './reference.css'
 
 const projects = [
   {
@@ -50,7 +51,7 @@ function App() {
       })
     }, { threshold: 0.12 })
 
-    document.querySelectorAll('.section-label, .project-row, .about-grid, .about-facts, .contact-content').forEach((element) => revealObserver.observe(element))
+    document.querySelectorAll('.section-label, .project-row, .about-grid, .about-facts, .contact-content, .stat-card').forEach((element) => revealObserver.observe(element))
     return () => revealObserver.disconnect()
   }, [])
 
@@ -90,12 +91,29 @@ function App() {
         <section className="hero section-pad" id="top">
           <div className="hero-kicker"><span className="status-dot" /> Backend engineer · Open to opportunities</div>
           <div className="hero-heading">
-            <h1>Building<br /><em>reliable</em> systems<span className="orange-dot">.</span></h1>
-            <div className="hero-aside"><div className="signal-card"><span className="signal-pulse" /><span>system.status</span><strong>operational</strong><i /><i /><i /><i /></div><p>Go backend engineer<br />based in Ahmedabad.<br />AWS · APIs · Microservices.</p></div>
+            <div className="hero-copy">
+              <p className="hero-eyebrow">Hello, I’m Devendra</p>
+              <h1>Building<br /><em>reliable</em><br />systems<span className="orange-dot">.</span></h1>
+              <p className="hero-intro">I build cloud-native services that stay clear under load, observable in production, and useful to the teams that own them.</p>
+              <button className="hero-cta" onClick={() => scrollTo('work')}>Explore my work <Arrow /></button>
+            </div>
+            <div className="hero-art" aria-label="Abstract Devendra Pohekar monogram illustration">
+              <div className="hero-orbit hero-orbit-one" />
+              <div className="hero-orbit hero-orbit-two" />
+              <div className="hero-monogram"><span>DP</span><i>GO · CLOUD · APIs</i></div>
+              <div className="hero-code-card"><span><i /> system.status</span><strong>operational</strong><small>services · healthy</small></div>
+              <span className="hero-location">AHMEDABAD, IN <b>↗</b></span>
+            </div>
           </div>
-          <div className="hero-bottom">
-            <p className="hero-intro">I build cloud-native services that stay clear under load, observable in production, and useful to the teams that own them.</p>
-            <button className="scroll-cue" onClick={() => scrollTo('work')}><span>Explore systems</span><Arrow /></button>
+          <div className="hero-bottom"><span>Backend engineering / 2026</span><button className="scroll-cue" onClick={() => scrollTo('work')}><span>Scroll to explore</span><Arrow /></button></div>
+        </section>
+
+        <section className="stats-section section-pad" aria-label="Career highlights">
+          <div className="stats-grid">
+            <article className="stat-card"><span>01 / EXPERIENCE</span><strong>3<span>+</span></strong><p>Years building backend systems</p></article>
+            <article className="stat-card"><span>02 / SPECIALTY</span><strong>Go</strong><p>Microservices, APIs & distributed systems</p></article>
+            <article className="stat-card"><span>03 / CLOUD</span><strong>AWS</strong><p>Reliable event-driven infrastructure</p></article>
+            <article className="stat-card"><span>04 / COMMUNITY</span><strong>Dapr</strong><p>Open-source contributor</p></article>
           </div>
         </section>
 
@@ -115,6 +133,7 @@ function App() {
 
         <section className="work-section section-pad" id="work">
           <div className="section-label"><span>Selected systems</span><span>(03)</span></div>
+          <div className="portfolio-heading"><div><span className="eyebrow">A selection of my work</span><h2>Featured <em>projects</em></h2></div><p>Systems built for scale,<br />clarity, and real-world use.</p></div>
           <div className="project-list">
             {projects.map((project) => (
               <article className="project-row" key={project.title} onClick={() => setSelectedProject(project)} tabIndex="0" onKeyDown={(event) => event.key === 'Enter' && setSelectedProject(project)}>

@@ -21,14 +21,16 @@
       Promise.all([
         loadText('./src/main.jsx'),
         loadText('./src/styles.css'),
-      ]).then(([source, styles]) => {
+        loadText('./src/reference.css'),
+      ]).then(([source, styles, referenceStyles]) => {
         if (!window.React || !window.ReactDOM || !window.Babel) throw new Error('React, ReactDOM, or Babel CDN failed to load')
         const withoutImports = source.replace("import { useEffect, useState } from 'react'", 'const { useEffect, useState } = React;')
           .replace("import { createRoot } from 'react-dom/client'", 'const { createRoot } = ReactDOM;')
           .replace("import './styles.css'", '')
+          .replace("import './reference.css'", '')
         const compiled = Babel.transform(withoutImports, { presets: ['react'] }).code
         const styleTag = document.createElement('style')
-        styleTag.textContent = styles
+        styleTag.textContent = `${styles}\n${referenceStyles}`
         document.head.appendChild(styleTag)
         new Function('React', 'ReactDOM', compiled)(React, ReactDOM)
       }).catch((error) => {

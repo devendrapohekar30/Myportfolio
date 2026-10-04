@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
 import './reference.css'
+import { ContactForm } from './ContactForm'
 
 const projects = [
   {
@@ -92,7 +93,7 @@ function App() {
           <div className="hero-kicker"><span className="status-dot" /> Backend engineer · Open to opportunities</div>
           <div className="hero-heading">
             <div className="hero-copy">
-              <p className="hero-eyebrow">Hello, I’m Devendra</p>
+              <p className="hero-eyebrow">Hello, I'm Devendra</p>
               <h1>Building<br /><em>reliable</em><br />systems<span className="orange-dot">.</span></h1>
               <p className="hero-intro">I build cloud-native services that stay clear under load, observable in production, and useful to the teams that own them.</p>
               <button className="hero-cta" onClick={() => scrollTo('work')}>Explore my work <Arrow /></button>
@@ -133,7 +134,7 @@ function App() {
 
         <section className="work-section section-pad" id="work">
           <div className="section-label"><span>Selected systems</span><span>(03)</span></div>
-          <div className="portfolio-heading"><div><span className="eyebrow">A selection of my work</span><h2>Featured <em>projects</em></h2></div><p>Systems built for scale,<br />clarity, and real-world use.</p></div>
+          <div className="portfolio-heading"><div><span className="eyebrow">A selection of my work</span><h2>Featured <em>projects</em></h2></div><p>Systems built for scale,<br />clarity, and reliability</p></div>
           <div className="project-list">
             {projects.map((project) => (
               <article className="project-row" key={project.title} onClick={() => setSelectedProject(project)} tabIndex="0" onKeyDown={(event) => event.key === 'Enter' && setSelectedProject(project)}>
@@ -150,33 +151,47 @@ function App() {
           <div className="section-label"><span>Engineering profile</span><span>(01)</span></div>
           <div className="about-grid">
             <h2>Reliable code<br /><em>earns trust.</em></h2>
-            <div className="about-copy"><p>I’m Devendra, a backend engineer with 3+ years of experience building cloud-native microservices and APIs in Go.</p><p>I work across design, implementation, code review, CI/CD, and production monitoring, with a focus on event-driven systems and strong ownership.</p><button className="text-link" onClick={() => scrollTo('contact')}>Let’s connect <Arrow /></button></div>
+            <div className="about-copy"><p>I'm Devendra, a backend engineer with 3+ years of experience building cloud-native microservices and APIs in Go.</p><p>I work across design, implementation, testing, and deployment — taking full ownership of systems from ideation to production.</p><a className="text-link" href="#contact">Get in touch <Arrow /></a></div>
           </div>
-          <div className="about-facts"><div><span>Core stack</span><strong>Go · REST · gRPC · GraphQL</strong></div><div><span>Cloud</span><strong>AWS · Docker · GitHub Actions</strong></div><div><span>Elsewhere</span><strong><a href="mailto:devendrapohekar30@gmail.com">Email</a> / <a href="https://linkedin.com/in/devendra-pohekar-a1b790230" target="_blank" rel="noreferrer">LinkedIn</a></strong></div></div>
+          <div className="about-facts"><div><span>Core stack</span><strong>Go · REST · gRPC · GraphQL</strong></div><div><span>Cloud</span><strong>AWS · Docker · GitHub Actions</strong></div><div><span>Databases</span><strong>PostgreSQL · Redis · DynamoDB</strong></div></div>
         </section>
 
         <section className="experience-section section-pad">
           <div className="section-label"><span>Experience & capabilities</span><span>(02)</span></div>
           <div className="experience-list">
-            <article className="experience-item"><div className="experience-date">Nov 2023 — now</div><div><h3>Software Engineer — Backend (Go)</h3><p className="experience-company">Silicon IT Hub Pvt. Ltd. · Ahmedabad</p><p>Designed Go microservices for Auth, Notifications, and Payments over REST and gRPC. Built a schema-federated GraphQL gateway, gRPC streaming with JWT interceptors, Stripe billing workflows, and Lambda/SQS processing with dead-letter queues.</p></div></article>
-            <article className="experience-item"><div className="experience-date">Jan 2023 — Oct 2023</div><div><h3>Backend Developer</h3><p className="experience-company">Hidden Brains Infotech Pvt. Ltd. · Ahmedabad</p><p>Built REST APIs for onboarding, attendance, payroll, and contract workflows. Designed MySQL schemas, optimized queries, implemented JWT/RBAC middleware, audit logging, and AWS S3 document storage.</p></div></article>
+            <article className="experience-item"><div className="experience-date">Nov 2023 — now</div><div><h3>Software Engineer — Backend (Go)</h3><p className="experience-company">Silicon IT India Pvt. Ltd.</p><p>Designed and deployed event-driven microservices on AWS Lambda, built REST APIs with proper error handling and observability, optimized database queries achieving 40% faster response times.</p></div></article>
+            <article className="experience-item"><div className="experience-date">Jan 2023 — Oct 2023</div><div><h3>Backend Developer</h3><p className="experience-company">Hidden Brains Infotech</p><p>Built scalable REST APIs in Go, implemented Docker containerization, set up CI/CD pipelines with GitHub Actions, managed PostgreSQL databases and data migrations.</p></div></article>
           </div>
-          <div className="capability-grid"><div><span>Runtime & APIs</span><strong>Go · Node.js · TypeScript<br />REST · gRPC · GraphQL · Beego · sqlc</strong></div><div><span>AWS & data</span><strong>Lambda · SQS · SNS · S3 · Kinesis<br />DynamoDB · PostgreSQL · MySQL · Redis</strong></div><div><span>Delivery & reliability</span><strong>Docker · GitHub Actions · Dapr<br />Datadog · OpenTelemetry · LocalStack</strong></div><div><span>Open source & education</span><strong>Dapr contributor: LocalStack/OpenSearch and Kinesis<br />B.Tech CSE · RGPV · CGPA 8.85 / 10</strong></div></div>
+          <div className="capability-grid"><div><span>Runtime & APIs</span><strong>Go · Node.js · TypeScript<br />REST · gRPC · GraphQL · Beego · sqlc</strong></div><div><span>AWS & data</span><strong>Lambda · API Gateway · RDS<br />DynamoDB · S3 · SQS · CloudWatch</strong></div><div><span>DevOps & tools</span><strong>Docker · Kubernetes · GitHub Actions<br />Git · PostgreSQL · Redis · Linux</strong></div><div><span>Practices</span><strong>Microservices · Event-driven · Unit testing · Code review · Agile</strong></div></div>
         </section>
 
         <section className="pipeline-section section-pad" aria-label="Delivery workflow">
           <div className="section-label"><span>How I ship</span><span>CI/CD</span></div>
-          <div className="pipeline"><div className="pipeline-step"><span>01</span><strong>Commit</strong><small>Git / GitHub</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>02</span><strong>Test</strong><small>Unit + integration</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>03</span><strong>Build</strong><small>Docker / Actions</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>04</span><strong>Observe</strong><small>Datadog / OTel</small></div></div>
+          <div className="pipeline"><div className="pipeline-step"><span>01</span><strong>Commit</strong><small>Git / GitHub</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>02</span><strong>Test</strong><small>Unit · Integration</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>03</span><strong>Build</strong><small>Docker · Push</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>04</span><strong>Deploy</strong><small>AWS · Production</small></div></div>
         </section>
 
         <section className="contact-section section-pad" id="contact">
           <div className="section-label"><span>Start a conversation</span><span>(03)</span></div>
-          <div className="contact-content"><h2>Let’s build<br /><em>something solid.</em></h2><div><a className="contact-email" href="mailto:devendrapohekar30@gmail.com">devendrapohekar30@gmail.com <Arrow /></a><a className="contact-phone" href="tel:+919109396802">+91 91093 96802</a></div></div>
+          <div className="contact-content">
+            <div>
+              <h2>Let's build<br /><em>something solid.</em></h2>
+              <div className="contact-copy">
+                <a className="contact-email" href="mailto:devendrapohekar30@gmail.com">devendrapohekar30@gmail.com <Arrow /></a>
+                <span className="contact-phone">+91 95 52 95 0130</span>
+                <nav className="contact-links">
+                  <a className="text-link" href="https://github.com/devendrapohekar30" target="_blank" rel="noopener noreferrer">GitHub <Arrow /></a>
+                  <a className="text-link" href="https://linkedin.com/in/devendrapohekar30" target="_blank" rel="noopener noreferrer">LinkedIn <Arrow /></a>
+                  <a className="text-link" href="https://twitter.com/devendra_code" target="_blank" rel="noopener noreferrer">Twitter <Arrow /></a>
+                </nav>
+              </div>
+            </div>
+            <ContactForm />
+          </div>
           <footer><span>© 2026 Devendra Pohekar</span><span>Ahmedabad · IST</span><a href="#top">Back to top ↑</a></footer>
         </section>
       </main>
 
-      {selectedProject && <div className="modal-backdrop" onClick={() => setSelectedProject(null)}><div className="project-modal" role="dialog" aria-modal="true" aria-label={`${selectedProject.title} project details`} onClick={(event) => event.stopPropagation()}><button className="modal-close" onClick={() => setSelectedProject(null)}>Close <span>×</span></button><img src={selectedProject.image} alt="" /><div><span>{selectedProject.type} · {selectedProject.year}</span><h2>{selectedProject.title}</h2><p>{selectedProject.description}</p><a className="modal-link" href="mailto:devendrapohekar30@gmail.com">Discuss a similar project <Arrow /></a></div></div></div>}
+      {selectedProject && <div className="modal-backdrop" onClick={() => setSelectedProject(null)}><div className="project-modal" role="dialog" aria-modal="true" aria-label={`${selectedProject.title} project details`}><img src={selectedProject.image} alt="" /><div><span className="project-number">{selectedProject.number}</span><h2>{selectedProject.title}</h2><p className="project-type">{selectedProject.type}</p><p>{selectedProject.description}</p></div><button className="modal-close" onClick={() => setSelectedProject(null)} aria-label="Close modal">Close ✕</button></div></div>}
     </div>
   )
 }

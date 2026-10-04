@@ -9,48 +9,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script>
-      const loadText = (path) => fetch(path).then((response) => {
-        if (!response.ok) throw new Error(`${path} returned ${response.status}`)
-        return response.text()
-      })
-
-      Promise.all([
-        loadText('./src/main.jsx'),
-        loadText('./src/ContactForm.jsx'),
-        loadText('./src/styles.css'),
-        loadText('./src/reference.css'),
-      ]).then(([source, contactFormSource, styles, referenceStyles]) => {
-        if (!window.React || !window.ReactDOM || !window.Babel) throw new Error('React, ReactDOM, or Babel CDN failed to load')
-        
-        // Strip imports from ContactForm but keep the function
-        const contactFormCode = contactFormSource
-          .replace("import { useState } from 'react'", 'const { useState } = React;')
-          .replace('export function ContactForm', 'function ContactForm')
-        
-        // Strip imports from main
-        const withoutImports = source
-          .replace("import { useEffect, useState } from 'react'", 'const { useEffect, useState } = React;')
-          .replace("import { createRoot } from 'react-dom/client'", 'const { createRoot } = ReactDOM;')
-          .replace("import './styles.css'", '')
-          .replace("import './reference.css'", '')
-          .replace("import { ContactForm } from './ContactForm'", '')
-        
-        // Combine ContactForm code with main code
-        const combinedCode = contactFormCode + '\n' + withoutImports
-        const compiled = Babel.transform(combinedCode, { presets: ['react'] }).code
-        
-        const styleTag = document.createElement('style')
-        styleTag.textContent = `${styles}\n${referenceStyles}`
-        document.head.appendChild(styleTag)
-        new Function('React', 'ReactDOM', compiled)(React, ReactDOM)
-      }).catch((error) => {
-        document.getElementById('root').innerHTML = `<p style="padding: 2rem; font-family: sans-serif;">Portfolio runner error: ${error.message}</p>`
-        console.error(error)
-      })
-    </script>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

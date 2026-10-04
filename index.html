@@ -26,11 +26,10 @@
       ]).then(([source, contactFormSource, styles, referenceStyles]) => {
         if (!window.React || !window.ReactDOM || !window.Babel) throw new Error('React, ReactDOM, or Babel CDN failed to load')
         
-        // Strip imports from ContactForm and wrap as a const
+        // Strip imports from ContactForm but keep the function
         const contactFormCode = contactFormSource
           .replace("import { useState } from 'react'", 'const { useState } = React;')
-          .replace('export function ContactForm', 'const ContactForm = ')
-          .replace(/\}$/, '};')
+          .replace('export function ContactForm', 'function ContactForm')
         
         // Strip imports from main
         const withoutImports = source

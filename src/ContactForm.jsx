@@ -83,99 +83,101 @@ export function ContactForm() {
 
   return (
     <div className="contact-form-wrapper">
-      <form className="contact-form" onSubmit={handleSubmit}>
-        {submitted && (
-          <div className="form-success">
-            ✓ Message received! I'll get back to you soon.
-          </div>
-        )}
+      <div className="contact-form-card">
+        <form className="contact-form" onSubmit={handleSubmit}>
+          {submitted && (
+            <div className="form-status success">
+              ✓ Message received! I'll get back to you soon.
+            </div>
+          )}
 
-        {error && (
-          <div className="form-error">
-            {error}
-          </div>
-        )}
-
-        <div className="form-group">
-          <label htmlFor="source">How did you find me?</label>
-          <select
-            id="source"
-            name="source"
-            value={formData.source}
-            onChange={handleChange}
-            required
-          >
-            <option value="freelancing">Freelancing Opportunity</option>
-            <option value="employee">Employment Opportunity</option>
-            <option value="collaboration">Collaboration / Partnership</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="name">Your Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John Doe"
-              required
-            />
-          </div>
+          {error && (
+            <div className="form-status error">
+              {error}
+            </div>
+          )}
 
           <div className="form-group">
-            <label htmlFor="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="john@example.com"
-              required
-            />
-          </div>
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="company">Company <span className="optional">(Optional)</span></label>
-            <input
-              type="text"
-              id="company"
-              name="company"
-              value={formData.company}
-              onChange={handleChange}
-              placeholder="Your Company"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="priority">Priority</label>
+            <label htmlFor="source">How did you find me?</label>
             <select
-              id="priority"
-              name="priority"
-              value={formData.priority}
+              id="source"
+              name="source"
+              value={formData.source}
               onChange={handleChange}
+              required
             >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
+              <option value="freelancing">Freelancing Opportunity</option>
+              <option value="employee">Employment Opportunity</option>
+              <option value="collaboration">Collaboration / Partnership</option>
+              <option value="other">Other</option>
             </select>
           </div>
-        </div>
 
-        <button
-          type="submit"
-          className="form-submit"
-          disabled={loading}
-        >
-          {loading ? 'Sending...' : 'Send Message'}
-        </button>
-      </form>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="name">Your Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="John Doe"
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="john@example.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="company">Company <span className="optional">(Optional)</span></label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                placeholder="Your Company"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="priority">Priority</label>
+              <select
+                id="priority"
+                name="priority"
+                value={formData.priority}
+                onChange={handleChange}
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="form-submit"
+            disabled={loading}
+          >
+            {loading ? 'Sending...' : 'Send Message'}
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

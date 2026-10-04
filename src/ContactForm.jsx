@@ -40,16 +40,15 @@ export function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) return
 
     setLoading(true)
-    
+
     try {
-      // Replace with your Google Apps Script URL
-      const scriptUrl = 'https://script.google.com/macros/d/YOUR_DEPLOYMENT_ID/usercallable'
-      
-      const response = await fetch(scriptUrl, {
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbyYlgTmytx2YtdwhQAdcM3UYjVNX2TV_jb_AZdkZu5i0fDi0e4mO0pC_BpsPSIkx028bQ/exec'
+
+      await fetch(scriptUrl, {
         method: 'POST',
         mode: 'no-cors',
         headers: {
@@ -73,7 +72,7 @@ export function ContactForm() {
         company: '',
         priority: 'medium',
       })
-      
+
       setTimeout(() => setSubmitted(false), 4000)
     } catch (err) {
       setError('Failed to submit form. Please try again.')

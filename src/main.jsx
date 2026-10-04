@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import './styles.css'
 import './reference.css'
+import './styles.css'
 import { ContactForm } from './ContactForm'
 
 const projects = [

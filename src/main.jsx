@@ -88,7 +88,7 @@ function App() {
     <div className="app-shell">
       <header className="site-header">
         <button className="wordmark" onClick={() => scrollTo('top')} aria-label="Back to top">
-          <span className="dp-logo" aria-hidden="true">DP</span><span className="brand-name">DEVENDRA</span>
+          <span className="dp-logo" aria-hidden="true">DP</span>
         </button>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen}>
           <span>{menuOpen ? 'Close' : 'Menu'}</span>

@@ -73,7 +73,6 @@ h1 em, h2 em { color: #ff5577; font-family: 'Playfair Display', serif; font-weig
 .hero-cta .arrow { font-size: 18px; }
 .hero-art { align-items: center; aspect-ratio: 1 / .9; display: flex; justify-content: center; min-height: 320px; position: relative; }
 .hero-orbit { border: 1px dashed rgba(194, 174, 223, .34); border-radius: 50%; height: min(34vw, 390px); position: absolute; width: min(34vw, 390px); }
-.hero-orbit-one { animation: orbit 32s linear infinite; }
 .hero-orbit-two { border-color: rgba(245, 34, 78, .56); height: min(25vw, 290px); transform: rotate(-24deg) scaleX(.76); width: min(34vw, 390px); }
 .hero-monogram { align-items: center; background: radial-gradient(circle at 35% 28%, #7742a8, #39244f 55%, #271a39); border: 1px solid rgba(255, 255, 255, .16); border-radius: 50%; box-shadow: 0 0 0 26px rgba(245, 34, 78, .08), 0 35px 100px rgba(0, 0, 0, .32); display: flex; flex-direction: column; height: clamp(205px, 26vw, 310px); justify-content: center; position: relative; width: clamp(205px, 26vw, 310px); z-index: 1; }
 .hero-monogram::before, .hero-monogram::after { border: 1px solid rgba(245, 34, 78, .7); border-radius: 50%; content: ''; inset: 14px; position: absolute; }
@@ -185,7 +184,6 @@ footer { border-color: var(--line); color: #aaa1b8; display: flex; font-size: 9p
 .project-modal p { color: #c8c0d2; font-size: 15px; line-height: 1.6; max-width: 520px; }
 .modal-close { color: white; }
 .modal-link { border-color: #ff718c; color: white; }
-@keyframes orbit { to { transform: rotate(360deg); } }
 @keyframes status-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(89, 214, 156, .45); } 50% { box-shadow: 0 0 0 8px rgba(89, 214, 156, 0); } }
 @media (max-width: 900px) {
   .section-pad { padding-left: 6vw; padding-right: 6vw; }

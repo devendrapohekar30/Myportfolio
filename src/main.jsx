@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './reference.css'
 import './styles.css'
 import { ContactForm } from './ContactForm'
-import profileImage from './assets/devendra-profile-portrait.jpg'
+import profileImage from './assets/devendra-profile-cutout.png'
 
 const projects = [
   {
@@ -112,7 +112,6 @@ function App() {
               <button className="hero-cta" onClick={() => scrollTo('work')}>Explore my work <Arrow /></button>
             </div>
             <div className="hero-art" aria-label="Abstract Devendra Pohekar monogram illustration">
-              <div className="hero-orbit hero-orbit-one" />
               <div className="hero-orbit hero-orbit-two" />
               <div className="hero-monogram"><span>DP</span><i>GO · CLOUD · APIs</i></div>
               <div className="hero-code-card"><span><i /> system.status</span><strong>operational</strong><small>services · healthy</small></div>
@@ -145,17 +144,13 @@ function App() {
         </section>
 
         <section className="work-section section-pad" id="work">
-          <div className="section-label"><span>Selected systems</span><span>(03)</span></div>
-          <div className="portfolio-heading"><div><span className="eyebrow">A selection of my work</span><h2>Featured <em>projects</em></h2></div><p>Systems built for scale,<br />clarity, and reliability</p></div>
-          <div className="project-list">
-            {projects.map((project) => (
-              <article className="project-row" key={project.title} onClick={() => setSelectedProject(project)} tabIndex="0" onKeyDown={(event) => event.key === 'Enter' && setSelectedProject(project)}>
-                <div className={`project-image ${project.color}`}><img src={project.image} alt="" /></div>
-                <div className="project-meta"><span className="project-number">{project.number}</span><h2>{project.title}</h2><p>{project.type}</p></div>
-                <div className="project-description"><p>{project.description}</p><span className="project-year">{project.year}</span></div>
-                <button className="project-arrow" aria-label={`View ${project.title}`}><Arrow diagonal /></button>
-              </article>
-            ))}
+          <div className="section-label"><span>Open for collaboration</span><span>(03)</span></div>
+          <div className="portfolio-heading"><div><span className="eyebrow">The next case study starts here</span><h2>Your next <em>project.</em></h2></div><p>Let’s build a system that deserves<br />to be featured here.</p></div>
+          <div className="coming-soon-board">
+            <div className="coming-grid" aria-hidden="true" />
+            <span className="coming-chip chip-one">GO / GRPC</span><span className="coming-chip chip-two">AWS / CLOUD</span><span className="coming-chip chip-three">BUILD IN PROGRESS</span>
+            <div className="coming-core" aria-hidden="true"><i /><i /><i /></div>
+            <div className="coming-copy"><span>01 / NEXT DEPLOYMENT</span><h3>Coming <em>soon.</em></h3><p>Waiting for your project to show here. Let’s turn your next idea into a reliable, production-ready system.</p><a className="hero-cta" href="#contact">Start a conversation <Arrow /></a></div>
           </div>
         </section>
 

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './reference.css'
 import './styles.css'
 import { ContactForm } from './ContactForm'
+import profileImage from './assets/devendra-profile-portrait.jpg'
 
 const projects = [
   {
@@ -163,6 +164,16 @@ function App() {
           <div className="about-grid">
             <h2>Reliable code<br /><em>earns trust.</em></h2>
             <div className="about-copy"><p>I'm Devendra, a backend engineer with 3+ years of experience building cloud-native microservices and APIs in Go.</p><p>I work across design, implementation, testing, and deployment — taking full ownership of systems from ideation to production.</p><a className="text-link" href="#contact">Get in touch <Arrow /></a></div>
+            <aside className="about-profile-card" aria-label="Devendra's contact details">
+              <div className="profile-photo-wrap"><img src={profileImage} alt="Devendra Pohekar" /></div>
+              <div className="profile-card-head"><div><small>Go microservice specialist</small><h3>Devendra<br />Pohekar</h3></div><b>DP</b></div>
+              <div className="profile-availability"><i />Available for work</div>
+              <div className="profile-contact-list">
+                <a href="mailto:devendrapohekar30@gmail.com"><i>✉</i><span>Email<em>devendrapohekar30@gmail.com</em></span></a>
+                <a href="tel:+919109396802"><i>⌕</i><span>Phone<em>+91 91093 96802</em></span></a>
+                <div><i>⌖</i><span>Location<em>India · Remote friendly</em></span></div>
+              </div>
+            </aside>
           </div>
           <div className="about-facts"><div><span>Core stack</span><strong>Go · REST · gRPC · GraphQL</strong></div><div><span>Cloud</span><strong>AWS · Docker · GitHub Actions</strong></div><div><span>Databases</span><strong>PostgreSQL · Redis · DynamoDB</strong></div></div>
         </section>
@@ -244,7 +255,7 @@ function App() {
               <h2>Let's build<br /><em>something solid.</em></h2>
               <div className="contact-copy">
                 <a className="contact-email" href="mailto:devendrapohekar30@gmail.com">devendrapohekar30@gmail.com <Arrow /></a>
-                <span className="contact-phone">+91 95 52 95 0130</span>
+                <span className="contact-phone">+91 91093 96802</span>
                 <nav className="contact-links">
                   <a className="text-link" href="https://linkedin.com/in/devendrapohekar30" target="_blank" rel="noopener noreferrer">LinkedIn <Arrow /></a>
                 </nav>

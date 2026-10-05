@@ -41,6 +41,9 @@ function Arrow({ diagonal = false }) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [selectedProject, setSelectedProject] = useState(null)
+  const [activeIntegration, setActiveIntegration] = useState(0)
+  const [awsExpanded, setAwsExpanded] = useState(false)
+  const [architectureOpen, setArchitectureOpen] = useState(false)
 
   useEffect(() => {
     const revealObserver = new IntersectionObserver((entries) => {
@@ -57,14 +60,23 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const closeOnEscape = (event) => event.key === 'Escape' && setSelectedProject(null)
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') { setSelectedProject(null); setArchitectureOpen(false) }
+    }
     document.addEventListener('keydown', closeOnEscape)
-    document.body.style.overflow = selectedProject ? 'hidden' : ''
+    document.body.style.overflow = selectedProject || architectureOpen ? 'hidden' : ''
     return () => {
       document.removeEventListener('keydown', closeOnEscape)
       document.body.style.overflow = ''
     }
-  }, [selectedProject])
+  }, [selectedProject, architectureOpen])
+
+  useEffect(() => {
+    if (activeIntegration !== 1) return undefined
+    setAwsExpanded(false)
+    const timer = setInterval(() => setAwsExpanded((expanded) => !expanded), 5000)
+    return () => clearInterval(timer)
+  }, [activeIntegration])
 
   const scrollTo = (id) => {
     setMenuOpen(false)
@@ -75,7 +87,7 @@ function App() {
     <div className="app-shell">
       <header className="site-header">
         <button className="wordmark" onClick={() => scrollTo('top')} aria-label="Back to top">
-          DP<span className="wordmark-dot">.</span>
+          <span className="dp-logo" aria-hidden="true">DP</span><span className="brand-name">DEVENDRA</span>
         </button>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen}>
           <span>{menuOpen ? 'Close' : 'Menu'}</span>
@@ -93,9 +105,9 @@ function App() {
           <div className="hero-kicker"><span className="status-dot" /> Backend engineer · Open to opportunities</div>
           <div className="hero-heading">
             <div className="hero-copy">
-              <p className="hero-eyebrow">Hello, I'm Devendra</p>
-              <h1>Building<br /><em>reliable</em><br />systems<span className="orange-dot">.</span></h1>
-              <p className="hero-intro">I build cloud-native services that stay clear under load, observable in production, and useful to the teams that own them.</p>
+              <p className="hero-eyebrow">Backend engineer · Ahmedabad, India</p>
+              <h1>Building <em>reliable</em><br />systems for the web<span className="orange-dot">.</span></h1>
+              <p className="hero-intro">I design cloud-native services that stay clear under load, observable in production, and useful to the teams that own them.</p>
               <button className="hero-cta" onClick={() => scrollTo('work')}>Explore my work <Arrow /></button>
             </div>
             <div className="hero-art" aria-label="Abstract Devendra Pohekar monogram illustration">
@@ -121,10 +133,9 @@ function App() {
         <section className="stack-section section-pad" aria-label="Technology stack">
           <div className="stack-heading"><span>Daily drivers</span><span>01 — 08</span></div>
           <div className="stack-grid">
-            <div className="stack-item"><i className="devicon-go-original-wordmark" /><span>Go</span></div>
+            <button className="stack-item stack-go" onClick={() => setArchitectureOpen(true)} aria-label="Open Go microservices system design"><i className="devicon-go-original-wordmark" /><span>Go</span><small>View system design</small></button>
             <div className="stack-item"><i className="devicon-amazonwebservices-plain-wordmark" /><span>AWS</span></div>
             <div className="stack-item"><i className="devicon-docker-plain" /><span>Docker</span></div>
-            <div className="stack-item"><i className="devicon-github-original" /><span>GitHub</span></div>
             <div className="stack-item"><i className="devicon-redis-plain-wordmark" /><span>Redis</span></div>
             <div className="stack-item"><i className="devicon-postgresql-plain-wordmark" /><span>PostgreSQL</span></div>
             <div className="stack-item"><i className="devicon-kubernetes-plain" /><span>Kubernetes</span></div>
@@ -166,8 +177,64 @@ function App() {
         </section>
 
         <section className="pipeline-section section-pad" aria-label="Delivery workflow">
-          <div className="section-label"><span>How I ship</span><span>CI/CD</span></div>
-          <div className="pipeline"><div className="pipeline-step"><span>01</span><strong>Commit</strong><small>Git / GitHub</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>02</span><strong>Test</strong><small>Unit · Integration</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>03</span><strong>Build</strong><small>Docker · Push</small></div><div className="pipeline-line" /><div className="pipeline-step"><span>04</span><strong>Deploy</strong><small>AWS · Production</small></div></div>
+          <div className="section-label"><span>How I ship</span><span>CI / CD</span></div>
+          <div className="pipeline-heading"><div><span className="eyebrow">From commit to production</span><h2>Deployment, <em>in motion.</em></h2></div><p>Every release moves through a visible, automated path—then Argo CD verifies the service is healthy.</p></div>
+          <div className="delivery-board" aria-label="Animated deployment workflow">
+            <div className="delivery-flow">
+              <article className="delivery-node"><span className="node-icon">&lt;/&gt;</span><div><b>Code push</b><small>GitHub · main</small></div><i>01</i></article>
+              <span className="flow-line" />
+              <article className="delivery-node"><span className="node-icon">✓</span><div><b>Build & test</b><small>CI · Docker</small></div><i>02</i></article>
+              <span className="flow-line" />
+              <article className="delivery-node"><span className="node-icon">ECR</span><div><b>Push image</b><small>AWS ECR · v1.4.0</small></div><i>03</i></article>
+              <span className="flow-line" />
+              <article className="delivery-node"><span className="node-icon">K</span><div><b>Kargo promote</b><small>stage → production</small></div><i>04</i></article>
+              <span className="flow-line" />
+              <article className="delivery-node"><span className="node-icon">A</span><div><b>Argo CD sync</b><small>cluster · production</small></div><i>05</i></article>
+            </div>
+            <div className="service-status"><div><span className="status-dot" /><span>ARGO CD · LIVE STATUS</span></div><strong>microservice-api</strong><p><b>Healthy</b><span>●</span> Synced · 3/3 pods ready</p><small>release v1.4.0 · just deployed</small></div>
+          </div>
+        </section>
+
+        <section className="integrations-section section-pad" aria-label="Third-party integrations">
+          <div className="section-label"><span>Third-party integrations</span><span>01 / 03</span></div>
+          <div className="integration-heading"><div><span className="eyebrow">Reliable system boundaries</span><h2>Payments without<br /><em>guesswork.</em></h2></div><p>I build integrations with clear server-side ownership, verified events, and observable states.</p></div>
+          <div className="integration-tabs" role="tablist" aria-label="Integration examples">
+            {['Stripe payments', 'AWS event flow', 'Notifications'].map((name, index) => <button key={name} role="tab" aria-selected={activeIntegration === index} className={activeIntegration === index ? 'is-active' : ''} onClick={() => setActiveIntegration(index)}>{String(index + 1).padStart(2, '0')} <span>{name}</span></button>)}
+          </div>
+          {activeIntegration === 0 && <div className="integration-panel">
+            <div className="stripe-intro"><div className="stripe-mark">stripe</div><span>Payments integration</span><h3>From booking<br />to <em>confirmed.</em></h3><p>A secure payment journey where your backend owns the booking, validates the amount, and fulfils only verified Stripe events.</p><div className="stripe-principles"><span>✓ Server-side amount validation</span><span>✓ Webhook signature verification</span><span>✓ Idempotent order fulfilment</span></div></div>
+            <div className="booking-flow" aria-label="Stripe booking payment integration flow">
+              <div className="booking-card"><div className="booking-card-top"><span>DP</span><b>Cloud architecture session</b><i>₹2,499</i></div><div className="booking-meta"><span>Tue, 15 Oct · 45 min</span><span>Online consultation</span></div><button>Confirm booking <b>→</b></button></div>
+              <div className="booking-path path-booking-one"><i>01</i><span>Booking created</span></div>
+              <div className="payment-service"><span>⌘</span><div><b>payments-service</b><small>Go API · validates amount</small></div><i>PaymentIntent</i></div>
+              <div className="booking-path path-booking-two"><i>02</i><span>Secure payment intent</span></div>
+              <div className="stripe-checkout"><div><span>stripe</span><small>Secure checkout</small></div><div className="checkout-methods"><div className="checkout-method card-method"><i>▰</i><span><b>Card</b><small>•••• 4242</small></span><em>VISA</em></div><div className="checkout-method gpay-method"><i>G</i><span><b>Google Pay</b><small>Fast, secure checkout</small></span><em>G Pay</em></div><div className="checkout-method apple-method"><i>●</i><span><b>Apple Pay</b><small>Confirm with Face ID</small></span><em> Pay</em></div></div><p>Payment details are secured by Stripe.</p><i>Payment authorized <strong>✓</strong></i></div>
+              <div className="payment-phone"><div className="payment-phone-notch" /><div className="payment-phone-screen"><div className="phone-status"><span>9:41</span><span>● ● ●</span></div><div className="success-ring"><span>✓</span></div><b>Payment successful</b><p>₹2,499 paid securely</p><small>Booking confirmed · 15 Oct</small></div></div>
+              <div className="booking-path path-booking-three"><i>03</i><span>Verified webhook event</span></div>
+              <div className="database-sync"><div className="db-icon">▤</div><div><small>POSTGRESQL · BOOKINGS</small><b>Payment status updated</b><p>booking_id BK-1048 · <strong>paid</strong> · transaction saved</p></div><span>✓</span></div>
+            </div>
+          </div>}
+          {activeIntegration === 1 && <div className={`aws-panel ${awsExpanded ? 'is-expanded' : ''}`}>
+            <div className="aws-panel-header"><div><span className="aws-mark">aws</span><span>Event-driven architecture</span></div><p>{awsExpanded ? 'Scale-out mode · parallel event processing' : 'Focused mode · single event processing'} <i /></p></div>
+            <div className="aws-canvas">
+              <div className="aws-lane-labels"><span>Producer</span><span>Event stream</span><span>Compute</span><span>Destination</span></div>
+              <div className="aws-lanes">
+                <div className="aws-lane lane-one"><div className="aws-box producer"><b>orders-service</b><small>OrderCreated</small></div><i className="lane-arrow" /><div className="aws-box stream"><em>≋</em><div><b>orders-stream</b><small>Kinesis Data Stream</small></div></div><i className="lane-arrow" /><div className="aws-box lambda"><em>λ</em><div><b>order-processor</b><small>Lambda · batch 100</small></div></div><i className="lane-arrow" /><div className="aws-box destination"><b>Partner API</b><small>Third-party app</small></div></div>
+                <div className="aws-lane lane-extra"><div className="aws-box producer"><b>billing-service</b><small>PaymentCaptured</small></div><i className="lane-arrow" /><div className="aws-box stream"><em>≋</em><div><b>billing-stream</b><small>Kinesis Data Stream</small></div></div><i className="lane-arrow" /><div className="aws-box lambda"><em>λ</em><div><b>billing-processor</b><small>Lambda · batch 50</small></div></div><i className="lane-arrow" /><div className="aws-box destination"><b>notifications</b><small>Microservice</small></div></div>
+                <div className="aws-lane lane-extra"><div className="aws-box producer"><b>catalog-service</b><small>InventoryChanged</small></div><i className="lane-arrow" /><div className="aws-box stream"><em>≋</em><div><b>inventory-stream</b><small>Kinesis Data Stream</small></div></div><i className="lane-arrow" /><div className="aws-box lambda"><em>λ</em><div><b>inventory-processor</b><small>Lambda · batch 75</small></div></div><i className="lane-arrow" /><div className="aws-box destination"><b>analytics</b><small>Microservice</small></div></div>
+              </div>
+              <div className="aws-mode-note"><span>{awsExpanded ? '03 streams · 03 consumers' : '01 stream · 01 consumer'}</span><b>{awsExpanded ? 'Parallel event processing is live' : 'Focused event processing is live'}</b><small>{awsExpanded ? 'Each domain event scales independently, without coupling services.' : 'Switching to parallel processing in 5 seconds…'}</small></div>
+            </div>
+          </div>}
+          {activeIntegration === 2 && <div className="notification-panel">
+            <div className="notification-copy"><div className="firebase-mark">✦</div><span>Firebase Cloud Messaging</span><h3>From backend event<br />to <em>mobile moment.</em></h3><p>When a meaningful backend event occurs, the notification service creates a targeted FCM message and delivers it to the user’s device.</p><div className="notification-legends"><span><i /> Backend event</span><span><i /> FCM delivery</span><span><i /> Mobile received</span></div></div>
+            <div className="notification-flow" aria-label="Firebase push notification flow">
+              <div className="notify-node backend-node"><span>⌘</span><div><b>notification-service</b><small>Go backend · event received</small></div></div><div className="notify-path path-one" />
+              <div className="notify-node fcm-node"><span>✦</span><div><b>Firebase Cloud Messaging</b><small>Targeted push · high priority</small></div></div><div className="notify-path path-two" />
+              <div className="mobile-device"><div className="mobile-speaker" /><div className="mobile-screen"><div className="mobile-top"><span>9:41</span><span>● ● ●</span></div><div className="app-brand">DP</div><p>Your workspace</p><div className="push-toast"><div className="push-icon">DP</div><div><b>Order update</b><p>Your deployment is live and healthy.</p><small>now</small></div></div><div className="mobile-pulse" /></div></div>
+              <div className="notification-status"><span className="status-dot" /><div><b>DELIVERED TO DEVICE</b><small>fcm_message_id: 0:172… · Android</small></div><strong>✓</strong></div>
+            </div>
+          </div>}
         </section>
 
         <section className="contact-section section-pad" id="contact">
@@ -179,9 +246,7 @@ function App() {
                 <a className="contact-email" href="mailto:devendrapohekar30@gmail.com">devendrapohekar30@gmail.com <Arrow /></a>
                 <span className="contact-phone">+91 95 52 95 0130</span>
                 <nav className="contact-links">
-                  <a className="text-link" href="https://github.com/devendrapohekar30" target="_blank" rel="noopener noreferrer">GitHub <Arrow /></a>
                   <a className="text-link" href="https://linkedin.com/in/devendrapohekar30" target="_blank" rel="noopener noreferrer">LinkedIn <Arrow /></a>
-                  <a className="text-link" href="https://twitter.com/devendra_code" target="_blank" rel="noopener noreferrer">Twitter <Arrow /></a>
                 </nav>
               </div>
             </div>
@@ -192,6 +257,18 @@ function App() {
       </main>
 
       {selectedProject && <div className="modal-backdrop" onClick={() => setSelectedProject(null)}><div className="project-modal" role="dialog" aria-modal="true" aria-label={`${selectedProject.title} project details`}><img src={selectedProject.image} alt="" /><div><span className="project-number">{selectedProject.number}</span><h2>{selectedProject.title}</h2><p className="project-type">{selectedProject.type}</p><p>{selectedProject.description}</p></div><button className="modal-close" onClick={() => setSelectedProject(null)} aria-label="Close modal">Close ✕</button></div></div>}
+      {architectureOpen && <div className="modal-backdrop architecture-backdrop" onClick={() => setArchitectureOpen(false)}><div className="architecture-modal" role="dialog" aria-modal="true" aria-label="Go microservices system design" onClick={(event) => event.stopPropagation()}>
+        <div className="architecture-head"><div><span>GO / GRPC · PRODUCTION BLUEPRINT</span><h2>Microservices, <em>designed to flow.</em></h2><p>A resilient Go platform with independent services, asynchronous events, secure delivery, and end-to-end observability.</p></div><button className="modal-close" onClick={() => setArchitectureOpen(false)} aria-label="Close system design">Close ✕</button></div>
+        <div className="architecture-legend"><span><i className="request" /> Synchronous gRPC</span><span><i className="event" /> Async event stream</span><span><i className="observe" /> Telemetry & alerts</span><b>LIVE ARCHITECTURE MAP</b></div>
+        <div className="architecture-map">
+          <section className="architecture-zone edge-zone"><h3>01 / Edge</h3><div className="arch-node edge-node"><small>PUBLIC EDGE</small><b>API Gateway</b><span>REST / gRPC ingress</span></div><div className="arch-arrow request-arrow">gRPC</div></section>
+          <section className="architecture-zone service-zone"><h3>02 / Go services on EKS</h3><div className="service-cluster"><div className="arch-node service-node"><small>GO / GRPC</small><b>Auth service</b><span>Identity & RBAC</span></div><div className="arch-node service-node"><small>GO / GRPC</small><b>Orders service</b><span>Business workflows</span></div><div className="arch-node service-node"><small>GO / GRPC</small><b>Payments service</b><span>Transactions</span></div><div className="arch-node service-node"><small>GO / GRPC</small><b>Notifications</b><span>Push & email</span></div></div><div className="service-note"><span>Amazon EKS</span><b>Horizontal pods · service discovery · gRPC tracing</b></div></section>
+          <section className="architecture-zone data-zone"><h3>03 / State & contracts</h3><div className="data-grid"><div className="arch-node data-node postgres"><b>PostgreSQL</b><span>Service-owned data</span></div><div className="arch-node data-node redis"><b>Redis cache</b><span>Hot reads · locks</span></div><div className="arch-node data-node dynamo"><b>DynamoDB</b><span>Idempotency keys</span></div><div className="arch-node data-node s3"><b>Amazon S3</b><span>Documents & exports</span></div></div></section>
+          <section className="architecture-zone event-zone"><h3>04 / Event backbone</h3><div className="event-rail"><div className="arch-node event-node"><b>Kafka</b><span>Domain events</span></div><div className="event-pulse" /><div className="arch-node event-node"><b>Kinesis</b><span>Streaming events</span></div><div className="event-pulse delay" /><div className="arch-node lambda-node"><b>λ Lambda</b><span>Async processors</span></div></div><div className="event-targets"><span>Partner APIs</span><span>OpenSearch</span><span>Analytics</span></div></section>
+          <section className="architecture-zone platform-zone"><h3>05 / Security, delivery & operations</h3><div className="platform-grid"><div className="platform-card security"><b>Secrets</b><span>AWS Secrets Manager · Infisical</span></div><div className="platform-card delivery"><b>Delivery</b><span>Docker → ECR → Kargo → Argo CD</span></div><div className="platform-card telemetry"><b>Telemetry</b><span>Datadog tracing · CloudWatch logs</span></div><div className="platform-card alert"><b>Incidents</b><span>OpenSearch → PagerDuty</span></div></div><div className="deploy-track"><span>Build image</span><i /> <span>Amazon ECR</span><i /> <span>Kargo promote</span><i /> <span>Argo CD sync</span><i /> <strong>Healthy on EKS ✓</strong></div></section>
+        </div>
+        <div className="architecture-status"><span className="status-dot" /><div><b>orders-service · v2.8.1</b><small>Trace 8fd1… · 42ms p95 · 6 healthy pods · event lag 0</small></div><span>SYNCED</span></div>
+      </div></div>}
     </div>
   )
 }
